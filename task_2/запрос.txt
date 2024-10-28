@@ -1,0 +1,25 @@
+SELECT a.header AS article,
+		c.message AS messge_rating,
+        c.user_id
+FROM users AS u JOIN publications AS p 
+	ON u.id = p.autor_id
+    JOIN articles AS a 
+    ON a.id = p.article_id
+    JOIN comments AS c
+    ON c.article_id = a.id
+WHERE u.id = 1
+UNION ALL
+SELECT a.header AS article,
+        m.rating AS rating,
+        m.user_id
+FROM users AS u JOIN publications AS p 
+	ON u.id = p.autor_id
+    JOIN articles AS a 
+    ON a.id = p.article_id
+    JOIN marks AS m 
+    ON m.article_id = a.id
+WHERE u.id = 1
+
+т.к. у статьи может быть несколько оценок и комментариев и их может быть разное количество,
+я не придумал, как вывести все в одной таблице в понятном для просмотра виде.
+сделал костыль через UNION (сначала идут все сообщения, потом оценки)
